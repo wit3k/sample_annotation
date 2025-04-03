@@ -1,2 +1,6 @@
 rootProject.name = 'untitled'
 
+include 'processor'
+include 'app'
+include 'annotation'
+
