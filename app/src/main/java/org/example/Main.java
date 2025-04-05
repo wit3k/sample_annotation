@@ -1,32 +1,33 @@
 package org.example;
 
+import com.sample.annotation.ScheduleEveryFiveMinsRuntimeProcessor;
 import org.example.annotation.ScheduleEveryFiveMins;
 
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Main {
-    public static void sampleSchedule(long seconds) {
-        TimerTask task = new TimerTask() {
-            public void run() {
-                (new Main()).myJob();
-            }
-        };
-        Timer timer = new Timer("Timer");
-        timer.scheduleAtFixedRate(task, 0, 1000L * seconds);
-    }
 
     @ScheduleEveryFiveMins
     public void myJob() {
         System.out.println("The current time is: " + new Date());
     }
 
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
+    @ScheduleEveryFiveMins
+    public void myJob2() {
+        System.out.println("myJob2: The current time is: " + new Date());
+    }
 
-        sampleSchedule(60 * 5);
+    @ScheduleEveryFiveMins
+    public void myJob3() {
+        System.out.println("myJob3: The current time is: " + new Date());
+    }
+
+    public static void main(String[] args) {
+        //we can think of ScheduleEveryFiveMinsRuntimeProcessor as a singleton service
+        //it has to have one instance so we can collect all annotated methods at runtime and schedule tasks
+        new ScheduleEveryFiveMinsRuntimeProcessor();
 
         System.console().readLine();
     }
+
 }
